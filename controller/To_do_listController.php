@@ -41,7 +41,6 @@ function createTables()
 function addTaskspage($idL)
 {
 	render("To_do_list/tasks", array(
-		'tasks' => $tasks,
 		'idL'		=> $idL)
 	);
 }
@@ -57,57 +56,46 @@ function addTasks($idL)
 	}
 }
 
-function createSpecies()
+function deleteTables($idL)
 {
-	if (createSpecie()) {
-		header("location:" . URL . "Hospital/create");
-		exit();
-	} else {
-		header("location:" . URL . "error/error_db");
-		exit();
-	}
+  if (deleteTable($idL)) {
+      header("location:" . URL . "To_do_list/index");
+      exit();
+  } else {
+      header("location:" . URL . "error/error_delete");
+      exit();
+  }
 }
 
-function deleteClients($idC)
+function deleteTasks($idL, $idK)
 {
-    if (deleteClient($idC)) {
-        header("location:" . URL . "Hospital/clients");
-        exit();
-    } else {
-        header("location:" . URL . "error/error_delete");
-        exit();
-    }
+  if (deleteTask($idL, $idK)) {
+      header("location:" . URL . "To_do_list/showList/$idL");
+      exit();
+  } else {
+      header("location:" . URL . "error/error_delete");
+      exit();
+  }
 }
 
-function deleteSpecies($idS)
+function editTables($idL)
 {
-    if (deleteSpecie($idS)) {
-        header("location:" . URL . "Hospital/species");
-        exit();
-    } else {
-        header("location:" . URL . "error/error_delete");
-        exit();
-    }
+	render("To_do_list/editTable", array(
+		'idL'		=> $idL)
+	);
 }
 
-function deletePatients($idP)
+function editTable($idL)
 {
-    if (deletePatient($idP)) {
-        header("location:" . URL . "hospital/index");
-        exit();
-    } else {
-        header("location:" . URL . "error/error_delete");
-        exit();
-    }
+	if (editTableName($idL)) {
+      header("location:" . URL . "To_do_list/index");
+      exit();
+  } else {
+      header("location:" . URL . "error/error_db");
+      exit();
+  }
 }
 
-function editClientsPage($idC)
-{
-    $clients = getClient($idC);
-    render("Hospital/editClient" , array(
-        'clients' => $clients,
-    ));
-}
 function editClients($idC)
 {
     if (editClient($idC)) {

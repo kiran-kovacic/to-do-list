@@ -13,8 +13,8 @@
      ?>
      <tr>
        <td><a href="<?= URL ?>To_do_list/showList/<?= $table['Tables_in_to_do_list'] ?>"><?= $table['Tables_in_to_do_list'] ?></a></td>
-       <td class="center"><a href="<?= URL ?>To_do_list/editPatientPage/<?= $patient['patient_id'] ?>">edit</a></td>
-       <td class="center"><a href="<?= URL ?>To_do_list/deletePatients/<?= $patient['patient_id'] ?>">delete</a></td>
+       <td class="center"><a href="<?= URL ?>To_do_list/editTables/<?= $table['Tables_in_to_do_list'] ?>">edit</a></td>
+       <td class="center"><a href="<?= URL ?>To_do_list/deleteTables/<?= $table['Tables_in_to_do_list'] ?>">delete</a></td>
      </tr>
     <?php } ?>
     </tbody>

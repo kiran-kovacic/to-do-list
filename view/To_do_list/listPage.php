@@ -16,7 +16,7 @@
        <td><?= $task['task'] ?></td>
        <td><?= $task['status'] ?></td>
        <td class="center"><a href="<?= URL ?>To_do_list/editPatientPage/<?= $patient['patient_id'] ?>">edit</a></td>
-       <td class="center"><a href="<?= URL ?>To_do_list/deletePatients/<?= $patient['patient_id'] ?>">delete</a></td>
+       <td class="center"><a href="<?= URL ?>To_do_list/deleteTasks/<?= $idL ?>/<?= $task['task_id'] ?>">delete</a></td>
      </tr>
     <?php } ?>
     </tbody>
