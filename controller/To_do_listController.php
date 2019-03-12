@@ -4,20 +4,21 @@ require(ROOT . "model/To_do_listModel.php");
 
 function index()
 {
-	$tables = getAllTables();
+	$tables = getAllTableNames();
 
 	render("To_do_list/index", array(
 		'tables' => $tables)
 	);
 }
 
-function showList($idL)
+function showList($idL, $list_name)
 {
-	$tasks = getTable($idL);
+	$tasks = getTableName($idL);
 
 	render("To_do_list/listPage", array(
-		'tasks' => $tasks,
-		'idL'		=> $idL)
+		'tasks' 		=> $tasks,
+		'idL'				=> $idL,
+		'list_name'	=> $list_name)
 	);
 }
 
@@ -27,9 +28,9 @@ function create()
 	);
 }
 
-function createTables()
+function createLists()
 {
-	if (createTable()) {
+	if (createList()) {
 		header("location:" . URL . "To_do_list/index");
 		exit();
 	} else {
@@ -38,17 +39,18 @@ function createTables()
 	}
 }
 
-function addTaskspage($idL)
+function addTaskspage($idL, $list_name)
 {
 	render("To_do_list/tasks", array(
-		'idL'		=> $idL)
+		'idL'				=> $idL,
+		'list_name'	=> $list_name)
 	);
 }
 
-function addTasks($idL)
+function addTasks($idL, $list_name)
 {
 	if (addTask($idL)) {
-		header("location:" . URL . "To_do_list/showList/$idL");
+		header("location:" . URL . "To_do_list/showList/$idL/$list_name");
 		exit();
 	} else {
 		header("location:" . URL . "error/error_db");
@@ -56,10 +58,10 @@ function addTasks($idL)
 	}
 }
 
-function deleteTables($idL)
+function deleteLists($idL)
 {
-  if (deleteTable($idL)) {
-      header("location:" . URL . "To_do_list/index");
+  if (deleteList($idL)) {
+      header("location:" . URL . "To_do_list/index/$idL");
       exit();
   } else {
       header("location:" . URL . "error/error_delete");
@@ -67,10 +69,10 @@ function deleteTables($idL)
   }
 }
 
-function deleteTasks($idL, $idK)
+function deleteTasks($idL, $idT, $list_name)
 {
-  if (deleteTask($idL, $idK)) {
-      header("location:" . URL . "To_do_list/showList/$idL");
+  if (deleteTask($idT)) {
+      header("location:" . URL . "To_do_list/showList/$idL/$list_name");
       exit();
   } else {
       header("location:" . URL . "error/error_delete");
@@ -78,16 +80,16 @@ function deleteTasks($idL, $idK)
   }
 }
 
-function editTables($idL)
+function editLists($idL)
 {
-	render("To_do_list/editTable", array(
+	render("To_do_list/editList", array(
 		'idL'		=> $idL)
 	);
 }
 
-function editTable($idL)
+function editList($idL)
 {
-	if (editTableName($idL)) {
+	if (editListName($idL)) {
       header("location:" . URL . "To_do_list/index");
       exit();
   } else {

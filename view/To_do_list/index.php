@@ -1,5 +1,4 @@
 <main>
-  <h2>Patiënts</h2>
   <table id="myTable">
     <thead>
       <tr>
@@ -12,9 +11,9 @@
       foreach ($tables as $table) {
      ?>
      <tr>
-       <td><a href="<?= URL ?>To_do_list/showList/<?= $table['Tables_in_to_do_list'] ?>"><?= $table['Tables_in_to_do_list'] ?></a></td>
-       <td class="center"><a href="<?= URL ?>To_do_list/editTables/<?= $table['Tables_in_to_do_list'] ?>">edit</a></td>
-       <td class="center"><a href="<?= URL ?>To_do_list/deleteTables/<?= $table['Tables_in_to_do_list'] ?>">delete</a></td>
+       <td><a href="<?= URL ?>To_do_list/showList/<?= $table['list_id'] ?>/<?= $table['list_name'] ?>"><?= $table['list_name'] ?></a></td>
+       <td class="center"><a href="<?= URL ?>To_do_list/editLists/<?= $table['list_id'] ?>">edit</a></td>
+       <td class="center"><a href="<?= URL ?>To_do_list/deleteLists/<?= $table['list_id'] ?>">delete</a></td>
      </tr>
     <?php } ?>
     </tbody>

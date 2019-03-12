@@ -1,6 +1,6 @@
 <main>
   <h2>Add-task</h2>
-  <form action="<?= URL ?>To_do_list/addTasks/<?= $idL ?>" method="post">
+  <form action="<?= URL ?>To_do_list/addTasks/<?= $idL ?>/<?= $list_name ?>" method="post">
     <p>Task</p>
     <textarea required name="task" rows="4" cols="50" placeholder="clean the kitchen etc."></textarea><br>
     <p>Status</p>

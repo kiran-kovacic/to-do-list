@@ -1,8 +1,8 @@
 <?php
-function getAllTables()
+function getAllTableNames()
 {
   $db = openDatabaseConnection();
-  $sql = "SHOW TABLES";
+  $sql = "SELECT `list_id`, `list_name` FROM `lists`";
   $query = $db->prepare($sql);
   $query->execute();
 
@@ -10,10 +10,10 @@ function getAllTables()
   return $query->fetchAll();
 }
 
-function getTable($idL)
+function getTableName($idL)
 {
     $db = openDatabaseConnection();
-    $sql = "SELECT * FROM $idL";
+    $sql = "SELECT `object_description`, `object_status`, `object_id` FROM `objects` WHERE `list_id` = :idL";
     $query = $db->prepare($sql);
     $query->execute(array(
         ":idL" => $idL
@@ -23,7 +23,7 @@ function getTable($idL)
     return $query->fetchAll();
 }
 
-function createTable()
+function createList()
 {
     $list_name = ucwords($_POST["list_name"]);
     if ($list_name === null) {
@@ -31,12 +31,8 @@ function createTable()
         exit();
     }
     $db = openDatabaseConnection();
-    $sql = "CREATE TABLE IF NOT EXISTS $list_name (
-            `task_id` int(11) NOT NULL AUTO_INCREMENT,
-	          `task` varchar(200) NOT NULL,
-            `status` int(20) NOT NULL,
-	           PRIMARY KEY (`task_id`)
-           ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;";
+    $sql = "INSERT INTO `lists` (`list_name`)
+    VALUES (:list_name)";
     $query = $db->prepare($sql);
     $query->execute(array(
         ":list_name" => $list_name,
@@ -55,65 +51,65 @@ function addTask($idL)
       exit();
   }
   $db = openDatabaseConnection();
-  $sql = "INSERT INTO $idL (`task`, `status`)
-  VALUES (:task, :status)";
+  $sql = "INSERT INTO `objects` (`object_description`, `object_status`, `list_id`)
+  VALUES (:task, :status, :idL)";
   $query = $db->prepare($sql);
   $query->execute(array(
       ":task" => $task,
       ":status" => $status,
+      ":idL" => $idL
   ));
 
   $db = null;
   return true;
 }
 
-function deleteTable($idL)
+function deleteList($idL)
 {
-    if ($idL === '') {
+  if ($idL === null) {
+      return false;
+      exit();
+  }
+  $db = openDatabaseConnection();
+  $sql = "DELETE `lists` , `objects` FROM `lists` INNER JOIN `objects`
+          WHERE `lists`.`list_id` = `objects`.`list_id` and `lists`.`list_id` = :idL";
+  $query = $db->prepare($sql);
+  $query->execute(array(
+      ":idL" => $idL
+  ));
+
+  $db = null;
+  return true;
+}
+
+function deleteTask($idT)
+{
+    if ($idT === null) {
         return false;
         exit();
     }
     $db = openDatabaseConnection();
-    $sql = "DROP TABLE $idL";
+    $sql = "DELETE FROM `objects` WHERE `object_id` = :idT";
     $query = $db->prepare($sql);
     $query->execute(array(
-        ":idL" => $idL
+        ":idT" => $idT
     ));
 
     $db = null;
     return true;
 }
 
-function deleteTask($idL, $idK)
+function editListName($idL)
 {
-    if ($idL === '' || $idK === '') {
-        return false;
-    }
-    $db = openDatabaseConnection();
-    $sql = "DELETE FROM $idL WHERE task_id = $idK";
-    $query = $db->prepare($sql);
-    $query->execute(array(
-        ":idL" => $idL,
-        ":idK" => $idK
-    ));
-
-    $db = null;
-    return true;
-}
-
-function editTableName($idL)
-{
-    $tableName = ucwords($_POST["table_name"]);
-    if ($tableName === null) {
+    $newTableName = ucwords($_POST["table_name"]);
+    if ($newTableName === null || $idL === null) {
         return false;
         exit();
     }
     $db = openDatabaseConnection();
-    $sql = "RENAME TABLE $idl TO $tableName";
+    $sql = "RENAME TABLE $idl TO $newTableName";
     $query = $db->prepare($sql);
-    $query->execute(array(
-      ":tableName" => $tableName,
-    ));
+    $query->execute();
 
     $db = null;
     return true;
