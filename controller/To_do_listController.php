@@ -80,10 +80,11 @@ function deleteTasks($idL, $idT, $list_name)
   }
 }
 
-function editLists($idL)
+function editLists($idL, $list_name)
 {
 	render("To_do_list/editList", array(
-		'idL'		=> $idL)
+		'idL'				=> $idL,
+		'list_name'	=> $list_name)
 	);
 }
 
@@ -98,40 +99,21 @@ function editList($idL)
   }
 }
 
-function editClients($idC)
+function editTasksPage($idL, $task_id, $task_description, $task_status, $list_name)
 {
-    if (editClient($idC)) {
-        header("location:" . URL . "Hospital/clients");
-        exit();
-    } else {
-        header("location:" . URL . "error/error_delete");
-        exit();
-    }
+  render("To_do_list/editTaskPage" , array(
+    'idL' 							=> $idL,
+		'task_id'						=> $task_id,
+		'task_description'	=> $task_description,
+		'task_status'				=> $task_status,
+		'list_name'					=> $list_name)
+  );
 }
 
-function editSpeciesPage($idS)
+function editTasks($idL, $task_id, $list_name)
 {
-    $species = getSpecie($idS);
-    render("hospital/editSpecie" , array(
-        'species' => $species,
-    ));
-}
-function editSpecies($idC)
-{
-    if (editspecie($idC)) {
-        header("location:" . URL . "hospital/species");
-        exit();
-    } else {
-        //er is iets fout gegaan..
-        header("location:" . URL . "error/error_delete");
-        exit();
-    }
-}
-
-function editPatients($idP)
-{
-    if (editPatient($idP)) {
-        header("location:" . URL . "Hospital/index");
+    if (editTask($task_id)) {
+        header("location:" . URL . "To_do_list/showList/$idL/$list_name");
         exit();
     } else {
         //er is iets fout gegaan..

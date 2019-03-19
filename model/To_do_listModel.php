@@ -101,73 +101,38 @@ function deleteTask($idT)
 
 function editListName($idL)
 {
-    $newTableName = ucwords($_POST["table_name"]);
+    $newTableName = ucwords($_POST["list_name"]);
     if ($newTableName === null || $idL === null) {
         return false;
         exit();
     }
     $db = openDatabaseConnection();
-    $sql = "RENAME TABLE $idl TO $newTableName";
-    $query = $db->prepare($sql);
-    $query->execute();
-
-    $db = null;
-    return true;
-}
-
-function editSpecie($idS)
-{
-    $species_description = isset($_POST["species_description"]) ? $_POST["species_description"] : null;
-
-    if ($species_description === null) {
-      return false;
-      exit();
-  }
-
-    $db = openDatabaseConnection();
-
-    $sql = "UPDATE `species`
-        SET species_description = :species_description
-        WHERE species_id = :idS";
-
+    $sql = "UPDATE `lists` SET list_name = :newTableName WHERE list_id = :idL";
     $query = $db->prepare($sql);
     $query->execute(array(
-        ":species_description" => $species_description,
-        ":idS" => $idS,
+        ":newTableName" => $newTableName,
+        ":idL" => $idL,
     ));
 
     $db = null;
     return true;
 }
 
-function editPatient($idP)
+function editTask($task_id)
 {
-    $petName = ucwords($_POST["pet_name"]);
-    $patient_name = isset($petName) ? $petName : null;
-    $client_id = isset($_POST["client_id"]) ? $_POST["client_id"] : null;
-    $gender_id = isset($_POST["gender_id"]) ? $_POST["gender_id"] : null;
-    $species_id = isset($_POST["specie_id"]) ? $_POST["specie_id"] : null;
-    $patient_status = isset($_POST["patient_status"]) ? $_POST["patient_status"] : null;
-
-    if ($patient_name === null || $client_id === null || $gender_id === null || $species_id === null || $patient_status === null) {
-      return false;
-      exit();
+    $task = ucwords($_POST["task"]);
+    $status = ucwords($_POST["status"]);
+    if ($task === null || $status === null) {
+        return false;
+        exit();
     }
-
     $db = openDatabaseConnection();
-
-    $sql = "UPDATE `patients`
-        SET patient_name = :patient_name, client_id = :client_id, gender_id = :gender_id, species_id = :species_id, patient_status = :patient_status
-        WHERE patient_id = :idP";
-
+    $sql = "UPDATE `objects` SET object_description = :task, object_status = :status WHERE object_id = :task_id";
     $query = $db->prepare($sql);
     $query->execute(array(
-        ":patient_name" => $patient_name,
-        ":client_id" => $client_id,
-        ":gender_id" => $gender_id,
-        ":species_id" => $species_id,
-        ":patient_status" => $patient_status,
-        ":idP" => $idP,
+        ":task" => $task,
+        ":status" => $status,
+        ":task_id" => $task_id,
     ));
 
     $db = null;

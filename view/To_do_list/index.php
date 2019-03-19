@@ -12,7 +12,7 @@
      ?>
      <tr>
        <td><a href="<?= URL ?>To_do_list/showList/<?= $table['list_id'] ?>/<?= $table['list_name'] ?>"><?= $table['list_name'] ?></a></td>
-       <td class="center"><a href="<?= URL ?>To_do_list/editLists/<?= $table['list_id'] ?>">edit</a></td>
+       <td class="center"><a href="<?= URL ?>To_do_list/editLists/<?= $table['list_id'] ?>/<?= $table['list_name'] ?>">edit</a></td>
        <td class="center"><a href="<?= URL ?>To_do_list/deleteLists/<?= $table['list_id'] ?>">delete</a></td>
      </tr>
     <?php } ?>
