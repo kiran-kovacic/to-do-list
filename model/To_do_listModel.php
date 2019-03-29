@@ -1,4 +1,5 @@
 <?php
+// deze functie haalt alle lijst namen op uit de database.
 function getAllTableNames()
 {
   $db = openDatabaseConnection();
@@ -10,6 +11,7 @@ function getAllTableNames()
   return $query->fetchAll();
 }
 
+// in deze functie word één speciefieke naam van een lijst uit de database.
 function getTableName($idL)
 {
     $db = openDatabaseConnection();
@@ -23,6 +25,7 @@ function getTableName($idL)
     return $query->fetchAll();
 }
 
+// hier wordt een nieuwe lijst naam aangemaakt in de table `lists`.
 function createList()
 {
     $list_name = ucwords($_POST["list_name"]);
@@ -42,6 +45,7 @@ function createList()
     return true;
 }
 
+// hier wordt een task toegevoegd aan de table `objects`.
 function addTask($idL)
 {
   $task = ucwords($_POST["task"]);
@@ -64,6 +68,7 @@ function addTask($idL)
   return true;
 }
 
+// in deze functie wordt een lijst en al zijn tasks verwijderd uit de database.
 function deleteList($idL)
 {
   if ($idL === null) {
@@ -82,6 +87,7 @@ function deleteList($idL)
   return true;
 }
 
+// deze functie verwijderd één task.
 function deleteTask($idT)
 {
     if ($idT === null) {
@@ -99,6 +105,7 @@ function deleteTask($idT)
     return true;
 }
 
+// deze functie verandert een aangegeven lijst naam.
 function editListName($idL)
 {
     $newTableName = ucwords($_POST["list_name"]);
@@ -118,6 +125,7 @@ function editListName($idL)
     return true;
 }
 
+// deze functie verandert een aangegeven task.
 function editTask($task_id)
 {
     $task = ucwords($_POST["task"]);
