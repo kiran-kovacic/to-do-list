@@ -18,4 +18,5 @@
     <?php } ?>
     </tbody>
   </table>
+  <p><a href="<?= URL ?>To_do_list/create">Create</a></p>
 </main>
