@@ -25,6 +25,26 @@ function getTableName($idL)
     return $query->fetchAll();
 }
 
+// in deze functie worden alle taken met een specifieke status van een lijst uit de database gehaald.
+function getTableStatuses($idL)
+{
+    $status = ucwords($_POST["status"]);
+    if ($status === null) {
+        return false;
+        exit();
+    }
+    $db = openDatabaseConnection();
+    $sql = "SELECT `object_description`, `object_status`, `object_id` FROM `objects` WHERE `list_id` = :idL AND `object_status` = :status";
+    $query = $db->prepare($sql);
+    $query->execute(array(
+        ":idL" => $idL,
+        ":status" => $status
+    ));
+
+    $db = null;
+    return $query->fetchAll();
+}
+
 // hier wordt een nieuwe lijst naam aangemaakt in de table `lists`.
 function createList()
 {

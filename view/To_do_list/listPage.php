@@ -1,6 +1,20 @@
 <main>
   <h2><?= $list_name ?></h2>
   <table id="myTable">
+    <form action="<?= URL ?>To_do_list/showStatus/<?= $idL ?>/<?= $list_name ?>" method="post">
+      <select required name="status">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+      </select>
+      <input type="submit" value="get">
+    </form>
     <thead>
       <tr>
         <th onclick="sortMyTable(), console.log('1')">Status</th>

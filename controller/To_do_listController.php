@@ -24,6 +24,18 @@ function showList($idL, $list_name)
 	);
 }
 
+// deze functie laat alle taken met een bepaalde status zien van een lijst.
+function showStatus($idL, $list_name)
+{
+	$tasks = getTableStatuses($idL);
+
+	render("To_do_list/listPage", array(
+		'tasks' 		=> $tasks,
+		'idL'				=> $idL,
+		'list_name'	=> $list_name)
+	);
+}
+
 // deze functie renderd de create pagina.
 function create()
 {
